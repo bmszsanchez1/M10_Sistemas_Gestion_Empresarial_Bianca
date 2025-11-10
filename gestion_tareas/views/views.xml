@@ -1,60 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-  <data>
-    <!-- explicit list view definition -->
-<!--
-    <record model="ir.ui.view" id="gestion_tareas.list">
-      <field name="name">gestion_tareas list</field>
-      <field name="model">gestion_tareas.gestion_tareas</field>
-      <field name="arch" type="xml">
-        <list>
-          <field name="name"/>
-          <field name="value"/>
-          <field name="value2"/>
-        </list>
-      </field>
-    </record>
--->
+    <data>
 
-    <!-- actions opening views on models -->
-<!--
-    <record model="ir.actions.act_window" id="gestion_tareas.action_window">
-      <field name="name">gestion_tareas window</field>
-      <field name="res_model">gestion_tareas.gestion_tareas</field>
-      <field name="view_mode">list,form</field>
-    </record>
--->
+        <!-- ==========================
+             Vista de lista (List)
+        =========================== -->
+        <record id="gestion_tareas_list" model="ir.ui.view">
+            <field name="name">gestion.tareas list</field>
+            <field name="model">gestion.tarea</field>
+            <field name="arch" type="xml">
+                <list string="Lista de Tareas">
+                    <field name="name"/>
+                    <field name="priority"/>
+                    <field name="urgente"/>
+                    <field name="realizada"/>
+                </list>
+            </field>
+        </record>
 
-    <!-- server action to the one above -->
-<!--
-    <record model="ir.actions.server" id="gestion_tareas.action_server">
-      <field name="name">gestion_tareas server</field>
-      <field name="model_id" ref="model_gestion_tareas_gestion_tareas"/>
-      <field name="state">code</field>
-      <field name="code">
-        action = {
-          "type": "ir.actions.act_window",
-          "view_mode": "list,form",
-          "res_model": model._name,
-        }
-      </field>
-    </record>
--->
+        <!-- ==========================
+             Acción para abrir la vista
+        =========================== -->
+        <record id="gestion_tareas_action_window" model="ir.actions.act_window">
+            <field name="name">Listado de Tareas</field>
+            <field name="res_model">gestion.tarea</field>
+            <field name="view_mode">list,form</field>
+        </record>
 
-    <!-- Top menu item -->
-<!--
-    <menuitem name="gestion_tareas" id="gestion_tareas.menu_root"/>
--->
-    <!-- menu categories -->
-<!--
-    <menuitem name="Menu 1" id="gestion_tareas.menu_1" parent="gestion_tareas.menu_root"/>
-    <menuitem name="Menu 2" id="gestion_tareas.menu_2" parent="gestion_tareas.menu_root"/>
--->
-    <!-- actions -->
-<!--
-    <menuitem name="List" id="gestion_tareas.menu_1_list" parent="gestion_tareas.menu_1"
-              action="gestion_tareas.action_window"/>
-    <menuitem name="Server to list" id="gestion_tareas" parent="gestion_tareas.menu_2"
-              action="gestion_tareas.action_server"/>
--->
-  </data>
+        <!-- ==========================
+             Menú principal y submenús
+        =========================== -->
+        <menuitem name="Gestión de Tareas" id="gestion_tareas_menu_root"/>
+        <menuitem name="Opciones de Tareas" id="gestion_tareas_menu_1" parent="gestion_tareas_menu_root"/>
+        <menuitem name="Mostrar lista" id="gestion_tareas_menu_1_list"
+                  parent="gestion_tareas_menu_1"
+                  action="gestion_tareas_action_window"/>
+
+    </data>
 </odoo>

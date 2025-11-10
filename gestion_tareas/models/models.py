@@ -1,19 +1,36 @@
 # -*- coding: utf-8 -*-
+from odoo import models, fields, api
 
-# from odoo import models, fields, api
+class GestionTarea(models.Model):
+    """Modelo para la gestión de tareas dentro de Odoo"""
+    _name = 'gestion.tarea'
+    _description = 'Gestión de tareas'
 
+    # -------------------------------------------------------
+    # CAMPOS
+    # -------------------------------------------------------
 
-# class gestion_tareas(models.Model):
-#     _name = 'gestion_tareas.gestion_tareas'
-#     _description = 'gestion_tareas.gestion_tareas'
+    # Nombre de la tarea
+    name = fields.Char(string='Nombre', required=True)
 
-#     name = fields.Char()
-#     value = fields.Integer()
-#     value2 = fields.Float(compute="_value_pc", store=True)
-#     description = fields.Text()
-#
-#     @api.depends('value')
-#     def _value_pc(self):
-#         for record in self:
-#             record.value2 = float(record.value) / 100
+    # Prioridad (entero)
+    priority = fields.Integer(string='Prioridad', default=0)
 
+    # Si la tarea está realizada o no
+    realizada = fields.Boolean(string='Realizada', default=False)
+
+    # Campo calculado: urgente si prioridad > 10
+    urgente = fields.Boolean(
+        string='Urgente',
+        compute='_compute_urgente',
+        store=True
+    )
+
+    # -------------------------------------------------------
+    # MÉTODO CALCULADO
+    # -------------------------------------------------------
+    @api.depends('priority')
+    def _compute_urgente(self):
+        """Marca como urgente si la prioridad es mayor a 10"""
+        for record in self:
+            record.urgente = record.priority > 10
